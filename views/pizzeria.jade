@@ -1,0 +1,44 @@
+extends layout
+
+block content
+    section#section-works.section.appear.clearfix
+        .container
+            form(action='/createpizzeria', method='post')
+                        .form-group
+                            label(for='formControlInput1') Pizzeria name
+                            input#formControlInput1.form-control(type='text', name='name')
+                        .form-group
+                            label(for='formControlInput2') Pizzeria address
+                            input#formControlInput2.form-control(type='text', name='address')
+                        .form-group
+                            label(for='formControlInput3') Pizzeria phone number
+                            input#formControlInput3.form-control(type='tel', name='phone')
+                        .form-group
+                            label(for='formControlInput4') Cost of delivery
+                            input#formControlInput4.form-control(type='text', name='deliveryCost')
+
+                        .form-group
+                            label(for='formControlInput5') estimated delivery time
+                            input#formControlInput5.form-control(type='text', name='deliveryTime')
+                        .form-group
+                            label(for='FormControlTextarea1') Write pizza names, separated by comma
+                            textarea#FormControlTextarea1.form-control(rows='3', name='pizzaNames')
+                        .form-group
+                            label(for='FormControlSelect2') Select available sizes
+                            select#FormControlSelect2.form-control(multiple='', name='sizes')
+                                option small
+                                option medium
+                                option large
+                        .form-group
+                            label(for='FormControlSelect3') Select available sauces
+                            select#FormControlSelect3.form-control(multiple='', name='sauces')
+                                option tomato
+                                option garlic
+                                option dill
+                        .form-group
+                            label(for='FormControlSelect4') Select available dough
+                            select#FormControlSelect4.form-control(multiple='', name='')
+                                option crust
+                                option medium
+                                option fat
+                        button.btn.btn-primary(type='submit') Submit

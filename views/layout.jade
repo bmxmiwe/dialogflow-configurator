@@ -1,0 +1,77 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/font-awesome.min.css')
+    link(rel='stylesheet', href='/stylesheets/font-awesome.css')
+    link(rel='stylesheet', href='/stylesheets/default.css')
+    link(rel='stylesheet', href='/stylesheets/animate.css')
+    link(rel='stylesheet', href='/js/fancybox/jquery.fancybox.css', media='screen')
+    link(rel='stylesheet', href='/stylesheets/isotope.css', media='screen')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    header
+      .main-menu
+        .container
+          .row
+            .col-md-4
+              h1
+                a.navbar-brand(href='/', data-0='line-height:90px;', data-300='line-height:50px;')
+                  | Hidayah
+            .col-md-8
+              .dropdown
+                ul.nav.nav-pills
+                  li
+                    a(href='/') Home
+                  li.active
+                    a(href='portfolio.html') Portfolio
+                  li
+                    a(href='blog.html') Blog
+                  li
+                    a(href='contact.html') Contact
+
+    block content
+
+    section#footer.section.footer
+      .container
+        .row.animated.opacity.mar-bot20(data-andown='fadeIn', data-animation='animation')
+          .col-sm-12.align-center
+            ul.social-network.social-circle
+              li
+                a.icoRss(href='#', title='Rss')
+                  i.fa.fa-rss
+              li
+                a.icoFacebook(href='#', title='Facebook')
+                  i.fa.fa-facebook
+              li
+                a.icoTwitter(href='#', title='Twitter')
+                  i.fa.fa-twitter
+              li
+                a.icoGoogle(href='#', title='Google +')
+                  i.fa.fa-google-plus
+              li
+                a.icoLinkedin(href='#', title='Linkedin')
+                  i.fa.fa-linkedin
+        .col-sm-12.text-center
+          p Copyright © Hidayah Theme
+          .credits
+            //
+              All the links in the footer should remain intact.
+              You can delete the links only if you purchased the pro version.
+              Licensing information: https://bootstrapmade.com/license/
+              Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Hidayah
+            | Designed by
+            a(href='https://bootstrapmade.com/') BootstrapMade
+    a.scrollup(href='#')
+      i.fa.fa-chevron-up
+    // jQuery (necessary for Bootstrap's JavaScript plugins)
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
+    // Include all compiled plugins (below), or include individual files as needed
+    script(src='/javascripts/bootstrap.min.js')
+    script(src='/javascripts/jquery.isotope.min.js')
+    script(src='/javascripts/fancybox/jquery.fancybox.pack.js')
+    script(src='/javascripts/wow.min.js')
+    script(src='/javascripts/functions.js')
+    script(type='text/javascript').
+      new WOW().init();
