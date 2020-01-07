@@ -25,7 +25,7 @@ router.post('/', function(req, res, next) {
     wait();
     console.log('wait');
     createIntents(req.body);
-    res.send('respond with a resource');
+    res.redirect('/success');
 
     function createEntities(form)
     {
