@@ -1,8 +1,8 @@
 const dialogflow = require('dialogflow');
 
 class EntityCreator {
-    createAgent()
-    {
+
+     createAgent() {
         const client = new dialogflow.v2.AgentsClient({
             // optional auth parameters.
         });

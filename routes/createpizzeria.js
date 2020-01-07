@@ -3,15 +3,19 @@ var router = express.Router();
 const EntityCreator = require('../public/dialogflowApi/EntityCreator');
 const IntentCreator = require('../public/dialogflowApi/IntentCreator');
 const IntentUpdater = require('../public/dialogflowApi/IntentUpdater');
+const AgentCreator = require('../public/dialogflowApi/AgentCreator');
 
 router.post('/', function(req, res, next) {
 
     console.log(req.body);
 
+    var DialogflowAgentCreator = new AgentCreator();
     var Creator = new EntityCreator();
     var ICreator = new IntentCreator();
     var IUpdater = new IntentUpdater();
 
+    DialogflowAgentCreator.createAgent();
+    wait();
     var pizzasArray = req.body.pizzaNames.split(',');
 
     var defaultResponse = 'Hello This is '+req.body.name+' pizzeria. Our menu is: ';
