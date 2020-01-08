@@ -1,45 +1,65 @@
+const dialogflow = require('dialogflow');
 var express = require('express');
 var router = express.Router();
 const EntityCreator = require('../public/dialogflowApi/EntityCreator');
 const IntentCreator = require('../public/dialogflowApi/IntentCreator');
 const IntentUpdater = require('../public/dialogflowApi/IntentUpdater');
-const AgentCreator = require('../public/dialogflowApi/AgentCreator');
 
 router.post('/', function(req, res, next) {
 
     console.log(req.body);
-
-    var DialogflowAgentCreator = new AgentCreator();
     var Creator = new EntityCreator();
     var ICreator = new IntentCreator();
     var IUpdater = new IntentUpdater();
 
-    DialogflowAgentCreator.createAgent();
-    wait();
-    var pizzasArray = req.body.pizzaNames.split(',');
-
-    var defaultResponse = 'Hello This is '+req.body.name+' pizzeria. Our menu is: ';
-    pizzasArray.forEach(function(pizza){
-        defaultResponse += ' -'+pizza;
+    const client = new dialogflow.v2.AgentsClient({
+        // optional auth parameters.
     });
-    console.log(defaultResponse);
-    IUpdater.updateDefaultIntent(defaultResponse);
 
-    createEntities(req.body);
-    wait();
+    const agent = {
+        parent : 'projects/remotedialogflow',
+        displayName : 'testFromApi',
+        defaultLanguageCode: 'en'
+    };
+
+    client.setAgent({agent: agent})
+        .then(responses => {
+            const response = responses[0];
+            console.log(response);
+
+            createEntities(req.body);
+            IUpdater.updateDefaultIntent(prepareWelcomeResponseText(req.body));
+            createIntents(req.body);
+        })
+        .catch(err => {
+            console.error(err);
+        });
+
+    wait(5);
     console.log('wait');
-    createIntents(req.body);
     res.redirect('/success');
+
+    function prepareWelcomeResponseText(form)
+    {
+        var pizzasArray = form.pizzaNames.split(',');
+        var defaultResponse = 'Hello This is '+req.body.name+' pizzeria. Our menu is: ';
+        pizzasArray.forEach(function(pizza){
+            defaultResponse += ' -'+pizza;
+        });
+        return defaultResponse;
+    }
 
     function createEntities(form)
     {
+        var pizzasArray = form.pizzaNames.split(',');
         createSizeEntity(form.sizes);
         createPizzaEntity(pizzasArray);
         createSaucesEntity(form.sauces);
         createCrustEntity(form.dough);
     }
 
-    function createIntents(form) {
+    function createIntents(form)
+    {
         ICreator.createPizzaTypeIntent();
         ICreator.createPizzaDoughIntent();
         ICreator.createPizzaSizeIntent();
@@ -51,7 +71,8 @@ router.post('/', function(req, res, next) {
         ICreator.createDeliveryCostIntent(form.deliveryCost);
     }
 
-    function createSizeEntity(selectedSizes) {
+    function createSizeEntity(selectedSizes)
+    {
 
         var sizes = [];
         if (selectedSizes.includes('small')) {
@@ -75,7 +96,8 @@ router.post('/', function(req, res, next) {
         Creator.addValuesToEntity('pizzaSize', sizes);
     }
 
-    function createPizzaEntity(pizzasToMenu) {
+    function createPizzaEntity(pizzasToMenu)
+    {
 
         var pizzas = [];
         pizzasToMenu.forEach(function(pizza){
@@ -87,7 +109,8 @@ router.post('/', function(req, res, next) {
         Creator.addValuesToEntity('pizzaType', pizzas);
     }
 
-    function createSaucesEntity(selectedSauces) {
+    function createSaucesEntity(selectedSauces)
+    {
 
         var sauces = [];
         if (selectedSauces.includes('tomato')) {
@@ -111,7 +134,8 @@ router.post('/', function(req, res, next) {
         Creator.addValuesToEntity('pizzaSauce', sauces);
     }
 
-    function createCrustEntity(selectedCrusts) {
+    function createCrustEntity(selectedCrusts)
+    {
 
         var crust = [];
         if (selectedCrusts.includes('thin')) {
@@ -135,9 +159,9 @@ router.post('/', function(req, res, next) {
         Creator.addValuesToEntity('pizzaCrust', crust);
     }
 
-    async function wait()
+    async function wait(seconds)
     {
-        await new Promise(resolve => {setTimeout(resolve, 5000)});
+        await new Promise(resolve => {setTimeout(resolve, seconds * 1000)});
     }
 });
 
